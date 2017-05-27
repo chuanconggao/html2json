@@ -35,7 +35,7 @@ def _extract(root, selector, prop, cleaners):
 
 def collect(root, template):
     def collect_rec(root, template, data):
-        for (t, s) in template.iteritems():
+        for (t, s) in template.items():
             if isinstance(s, dict):
                 data[t] = {}
                 collect_rec(root, s, data[t])
