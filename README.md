@@ -20,9 +20,12 @@ Note that the HTML must contain the root node, like `<html>...</html>` or `<div>
 Template Syntax
 ----
 
-- The basic syntax is `keyName: [cssSelector, attribute, [listOfRegexes]]`. The list of regexes supports two forms of regex operations. The operations with in the list are executed sequentially.
-    - Replacement: `s/regex/replacement/g`. `g` is optional for multiple replacements.
-    - Extraction: `/regex/`.
+- The basic syntax is `keyName: [selector, attr, [listOfRegexes]]`.
+    1. `selector` is a CSS selector (supported by [lxml](http://lxml.de/)).
+    2. `attr` matches the attribute value. It can be `null` to match either the inner text or the outer text when the inner text is empty.
+    3. The list of regexes `[listOfRegexes]` supports two forms of regex operations. The operations with in the list are executed sequentially.
+        - Replacement: `s/regex/replacement/g`. `g` is optional for multiple replacements.
+        - Extraction: `/regex/`.
 
 For example:
 
@@ -43,7 +46,9 @@ For example:
 }
 ```
 
-An alternative simplified syntax `keyName: [subRoot, subTemplate]` can be used. `subRoot` a CSS selector of the new root for each sub entry. `subTemplate` is a sub-template for each entry, recursively.
+An alternative simplified syntax `keyName: [subRoot, subTemplate]` can be used.
+    1. `subRoot` a CSS selector of the new root for each sub entry.
+    2. `subTemplate` is a sub-template for each entry, recursively.
 
 For example, the previous example can be simplified as follow.
 
@@ -56,7 +61,9 @@ For example, the previous example can be simplified as follow.
 }
 ```
 
-- To extract a list of sub-entries following the same sub-template, the list syntax is `keyName: [[subRoot, subTemplate]]`. `subRoot` is the CSS selector of the new root for each sub entry. `subTemplate` is the sub-template for each entry, recursively. Please note the difference (surrounding `[` and `]`) from the previous syntax above.
+- To extract a list of sub-entries following the same sub-template, the list syntax is `keyName: [[subRoot, subTemplate]]`. Please note the difference (surrounding `[` and `]`) from the previous syntax above.
+    1. `subRoot` is the CSS selector of the new root for each sub entry.
+    2. `subTemplate` is the sub-template for each entry, recursively.
 
 For example:
 
