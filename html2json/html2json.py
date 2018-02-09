@@ -6,14 +6,11 @@ from builtins import *
 
 import re
 
-_reCleaner = re.compile(r"(s)?(?P<sep>\W)((?:(?!(?P=sep)).)*)(?P=sep)(?:((?:(?!(?P=sep)).)*)(?P=sep)(g)?)?")
+__reCleaner = re.compile(r"(s)?(?P<sep>\W)((?:(?!(?P=sep)).)*)(?P=sep)(?:((?:(?!(?P=sep)).)*)(?P=sep)(g)?)?")
 
-def _extract(root, selector, prop, cleaners):
+def __extract(root, selector, prop, cleaners):
     try:
-        if selector == "":
-            tag = root
-        else:
-            tag = root.select(selector)[0]
+        tag = root.select(selector)[0] if selector else root
     except:
         return None
 
@@ -25,13 +22,14 @@ def _extract(root, selector, prop, cleaners):
         v = tag[prop].strip()
 
     for c in cleaners:
-        m = _reCleaner.match(c)
+        m = __reCleaner.match(c)
         if m.group(1) == "s":
             v = re.sub(m.group(3), m.group(4), v, count=(0 if m.group(5) == "g" else 1))
         else:
             v = re.search(m.group(3), v).group(0)
 
     return v
+
 
 def collect(root, template):
     def collect_rec(root, template, data):
@@ -45,10 +43,11 @@ def collect(root, template):
                     data[t].append({})
                     collect_rec(cRoot, s[0][1], data[t][-1])
             else:
-                v = _extract(root, s[0], s[1], s[2])
+                v = __extract(root, s[0], s[1], s[2])
 
                 if v is not None:
                     data[t] = v
+
 
     data = {}
     collect_rec(root, template, data)
