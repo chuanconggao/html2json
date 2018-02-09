@@ -8,12 +8,12 @@ Convert a HTML webpage to JSON data using a template defined in JSON.
 Installation
 ----
 
-This package is available on PyPi. Just use `pip install -U html2json` to install it. Then you can import it using `from html2json import html2json`.
+This package is available on PyPi. Just use `pip install -U html2json` to install it. Then you can import it using `from html2json import collect`.
 
 API
 ----
 
-The method is `collect(root, template)`. `root` is the root element of the page derived by [BeautifulSoup 4](https://www.crummy.com/software/BeautifulSoup/) and `template` is the loaded JSON object of the template.
+The method is `collect(html, template)`. `html` is the HTML of page loaded as string, and `template` is the JSON of template loaded as Python objects.
 
 Template Syntax
 ----

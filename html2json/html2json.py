@@ -6,49 +6,58 @@ from builtins import *
 
 import re
 
-__reCleaner = re.compile(r"(s)?(?P<sep>\W)((?:(?!(?P=sep)).)*)(?P=sep)(?:((?:(?!(?P=sep)).)*)(?P=sep)(g)?)?")
+from pyquery import PyQuery
+
+__reCleaner = re.compile(r"(?P<mode>s)?(?P<sep>\W)(?P<search>(?:(?!(?P=sep)).)*)(?P=sep)(?:(?P<sub>(?:(?!(?P=sep)).)*)(?P=sep)(?P<flag>g)?)?")
 
 def __extract(root, selector, prop, cleaners):
     try:
-        tag = root.select(selector)[0] if selector else root
+        tag = root(selector) if selector else root
     except:
         return None
 
-    if prop is None:
-        v = ''.join(str(c) for c in tag.contents if isinstance(c, str)).strip()
-        if v == "":
-            v = tag.text.strip()
+    if prop:
+        v = tag.attr(prop)
     else:
-        v = tag[prop].strip()
+        v = ''.join(c for c in tag.contents() if isinstance(c, str))
+        if v == "":
+            v = tag.text()
+
+    v = v.strip()
 
     for c in cleaners:
         m = __reCleaner.match(c)
-        if m.group(1) == "s":
-            v = re.sub(m.group(3), m.group(4), v, count=(0 if m.group(5) == "g" else 1))
-        else:
-            v = re.search(m.group(3), v).group(0)
+
+        v = (
+            re.sub(m.group("search"), m.group("sub"), v, count=(0 if m.group("flag") == "g" else 1))
+            if m.group("mode") == "s"
+            else re.search(m.group("search"), v).group(0)
+        )
 
     return v
 
 
-def collect(root, template):
+def collect(html, template):
     def collect_rec(root, template, data):
         for (t, s) in template.items():
             if isinstance(s, dict):
                 data[t] = {}
                 collect_rec(root, s, data[t])
             elif isinstance(s, list) and len(s) == 1:
+                subSelector, subTemplate = s[0]
+
                 data[t] = []
-                for cRoot in root.select(s[0][0]):
+                for subRoot in root(subSelector):
                     data[t].append({})
-                    collect_rec(cRoot, s[0][1], data[t][-1])
+                    collect_rec(subRoot, subTemplate, data[t][-1])
             else:
-                v = __extract(root, s[0], s[1], s[2])
+                v = __extract(root, *s)
 
                 if v is not None:
                     data[t] = v
 
 
     data = {}
-    collect_rec(root, template, data)
+    collect_rec(PyQuery(html), template, data)
+
     return data
