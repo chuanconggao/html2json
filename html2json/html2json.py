@@ -12,7 +12,7 @@ __reCleaner = re.compile(r"(?P<mode>s)?(?P<sep>\W)(?P<search>(?:(?!(?P=sep)).)*)
 
 def __extract(root, selector, prop, cleaners):
     try:
-        tag = root(selector) if selector else root
+        tag = root.find(selector) if selector else root
     except:
         return None
 
@@ -47,7 +47,7 @@ def collect(html, template):
                 subSelector, subTemplate = s[0]
 
                 data[t] = []
-                for subRoot in root(subSelector):
+                for subRoot in root.find(subSelector):
                     data[t].append({})
                     collect_rec(subRoot, subTemplate, data[t][-1])
             else:

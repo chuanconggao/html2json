@@ -15,6 +15,8 @@ API
 
 The method is `collect(html, template)`. `html` is the HTML of page loaded as string, and `template` is the JSON of template loaded as Python objects.
 
+Note that the HTML must contain the root node, like `<html>...</html>` or `<div>...</div>`. The root node itself cannot be matched.
+
 Template Syntax
 ----
 
