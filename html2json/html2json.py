@@ -43,14 +43,19 @@ def collect(html, template):
             if isinstance(s, dict):
                 data[t] = {}
                 collect_rec(root, s, data[t])
-            elif isinstance(s, list) and len(s) == 1:
+            elif isinstance(s, list) and len(s) == 1 and isinstance(s[0], list):
                 subSelector, subTemplate = s[0]
 
                 data[t] = []
                 for subRoot in root.find(subSelector):
                     data[t].append({})
                     collect_rec(subRoot, subTemplate, data[t][-1])
-            else:
+            elif isinstance(s, list) and len(s) == 2 and isinstance(s[1], dict):
+                subSelector, subTemplate = s[0], s[1]
+
+                data[t] = {}
+                collect_rec(root.find(subSelector), subTemplate, data[t])
+            elif isinstance(s, list) and len(s) == 3:
                 v = __extract(root, *s)
 
                 if v is not None:

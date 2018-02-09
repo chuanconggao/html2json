@@ -6,12 +6,12 @@ from setuptools import setup
 setup(
     name="html2json",
     packages=["html2json"],
-    version="0.2.1",
+    version="0.2.2",
     description="Parsing HTML to JSON",
     author="Chuancong Gao",
     author_email="chuancong@gmail.com",
     url="https://github.com/chuanconggao/html2json",
-    download_url="https://github.com/chuanconggao/html2json/tarball/0.2.1",
+    download_url="https://github.com/chuanconggao/html2json/tarball/0.2.2",
     keywords=["parser", "html", "json"],
     license="MIT",
     classifiers=[

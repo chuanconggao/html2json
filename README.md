@@ -32,7 +32,31 @@ For example:
 }
 ```
 
-- To extract a list of sub-entries following the same sub-template, the list syntax is `keyName: [[subRoot, subTemplate]]`. `subRoot` is the CSS selector of the new root for each sub entry. `subTemplate` is the sub-template for each entry, recursively.
+- As JSON, nested structure can be easily constructed.
+
+```json
+{
+    "Cover": {
+        "URL": [".cover img", "src", []],
+        "Number of Favorites": [".cover .favorites", "value", []]
+    },
+}
+```
+
+An alternative simplified syntax `keyName: [subRoot, subTemplate]` can be used. `subRoot` a CSS selector of the new root for each sub entry. `subTemplate` is a sub-template for each entry, recursively.
+
+For example, the previous example can be simplified as follow.
+
+```json
+{
+    "Cover": [".cover", {
+        "URL": ["img", "src", []],
+        "Number of Favorites": [".favorites", "value", []]
+    }],
+}
+```
+
+- To extract a list of sub-entries following the same sub-template, the list syntax is `keyName: [[subRoot, subTemplate]]`. `subRoot` is the CSS selector of the new root for each sub entry. `subTemplate` is the sub-template for each entry, recursively. Please note the difference (surrounding `[` and `]`) from the previous syntax above.
 
 For example:
 
