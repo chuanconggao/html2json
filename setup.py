@@ -12,7 +12,11 @@ setup(
     author_email="chuancong@gmail.com",
     url="https://github.com/chuanconggao/html2json",
     download_url="https://github.com/chuanconggao/html2json/tarball/0.2.2",
-    keywords=["parser", "html", "json"],
+    keywords=[
+        "parser",
+        "html",
+        "json"
+    ],
     license="MIT",
     classifiers=[
         "Operating System :: OS Independent",
