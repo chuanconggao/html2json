@@ -1,7 +1,6 @@
-html2json
-====
-
-[![PyPI version](https://badge.fury.io/py/html2json.svg)](https://badge.fury.io/py/html2json)
+[![PyPi version](https://img.shields.io/pypi/v/html2json.svg)](https://pypi.python.org/pypi/html2json/)
+[![PyPi pyversions](https://img.shields.io/pypi/pyversions/html2json.svg)](https://pypi.python.org/pypi/html2json/)
+[![PyPi license](https://img.shields.io/pypi/l/html2json.svg)](https://pypi.python.org/pypi/html2json/)
 
 Convert a HTML webpage to JSON data using a template defined in JSON.
 
