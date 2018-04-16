@@ -46,7 +46,7 @@ For example:
 }
 ```
 
-An alternative simplified syntax `keyName: [subRoot, subTemplate]` can be used.
+- An alternative simplified syntax `keyName: [subRoot, subTemplate]` can be used.
     1. `subRoot` a CSS selector of the new root for each sub entry.
     2. `subTemplate` is a sub-template for each entry, recursively.
 
@@ -72,7 +72,7 @@ For example:
     "Comments": [[".comments", {
         "From": [".from", null, []],
         "Content": [".content", null, []],
-        "Photos": [[".content img", {
+        "Photos": [["img", {
             "URL": ["", "src", []]
         }]]
     }]]
