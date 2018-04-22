@@ -1,29 +1,41 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
+#! /usr/bin/env python3
 
 from setuptools import setup
 
+url = "https://github.com/chuanconggao/html2json"
+version = "0.2.3"
+
 setup(
     name="html2json",
+
     packages=["html2json"],
-    version="0.2.2",
-    description="Parsing HTML to JSON",
+
+    url=url,
+
+    version=version,
+    download_url=f"{url}/tarball/{version}",
+
+    license="MIT",
+
     author="Chuancong Gao",
     author_email="chuancong@gmail.com",
-    url="https://github.com/chuanconggao/html2json",
-    download_url="https://github.com/chuanconggao/html2json/tarball/0.2.2",
+
+    description="Parsing HTML to JSON",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+
     keywords=[
         "parser",
         "html",
         "json"
     ],
-    license="MIT",
     classifiers=[
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3"
     ],
+
     install_requires=[
         "future>=0.16.0",
         "pyquery>=1.4.0"
