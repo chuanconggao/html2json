@@ -4,6 +4,11 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 from builtins import *
 
+from typing import *
+
+Template = Dict[str, Any]
+Data = Dict[str, Any]
+
 import re
 
 from pyquery import PyQuery
@@ -11,9 +16,15 @@ from pyquery import PyQuery
 __reCleaner = re.compile(r"(?P<mode>s)?(?P<sep>\W)(?P<search>(?:(?!(?P=sep)).)*)(?P=sep)(?:(?P<sub>(?:(?!(?P=sep)).)*)(?P=sep)(?P<flag>g)?)?")
 
 def __extract(root, selector, prop, cleaners):
+    # type: (PyQuery, Union[str, None], Union[str, None], List[str]) -> Union[str, None]
     try:
         tag = root.find(selector) if selector else root
     except:
+        # Invalid selector
+        return None
+
+    # Non-matching selector
+    if not tag:
         return None
 
     if prop:
@@ -38,31 +49,31 @@ def __extract(root, selector, prop, cleaners):
 
 
 def collect(html, template):
+    # type: (str, Template) -> Data
     def collect_rec(root, template, data):
+        # type: (PyQuery, Template, Data) -> None
         for (t, s) in template.items():
             if isinstance(s, dict):
                 data[t] = {}
                 collect_rec(root, s, data[t])
-            elif isinstance(s, list) and len(s) == 1 and isinstance(s[0], list):
-                subSelector, subTemplate = s[0]
+            elif isinstance(s, list):
+                if len(s) == 1 and isinstance(s[0], list):
+                    subSelector, subTemplate = s[0]
 
-                data[t] = []
-                for subRoot in root.find(subSelector):
-                    data[t].append({})
-                    collect_rec(subRoot, subTemplate, data[t][-1])
-            elif isinstance(s, list) and len(s) == 2 and isinstance(s[1], dict):
-                subSelector, subTemplate = s[0], s[1]
+                    data[t] = []
+                    for subRoot in root.find(subSelector):
+                        data[t].append({})
+                        collect_rec(subRoot, subTemplate, data[t][-1])
+                elif len(s) == 2 and isinstance(s[1], dict):
+                    subSelector, subTemplate = s[0], s[1]
 
-                data[t] = {}
-                collect_rec(root.find(subSelector), subTemplate, data[t])
-            elif isinstance(s, list) and len(s) == 3:
-                v = __extract(root, *s)
-
-                if v is not None:
-                    data[t] = v
+                    data[t] = {}
+                    collect_rec(root.find(subSelector), subTemplate, data[t])
+                elif len(s) == 3:
+                    data[t] = __extract(root, *s)
 
 
-    data = {}
+    data = {} # type: Data
     collect_rec(PyQuery(html), template, data)
 
     return data

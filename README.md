@@ -14,13 +14,15 @@ API
 
 The method is `collect(html, template)`. `html` is the HTML of page loaded as string, and `template` is the JSON of template loaded as Python objects.
 
-Note that the HTML must contain the root node, like `<html>...</html>` or `<div>...</div>`. The root node itself cannot be matched.
+Note that the HTML must contain the root node, like `<html>...</html>` or `<div>...</div>`.
 
 Template Syntax
 ----
 
 - The basic syntax is `keyName: [selector, attr, [listOfRegexes]]`.
     1. `selector` is a CSS selector (supported by [lxml](http://lxml.de/)).
+        - When the selector is `null`, the root node itself is matched.
+        - When the selector cannot be matched, `null` is returned.
     2. `attr` matches the attribute value. It can be `null` to match either the inner text or the outer text when the inner text is empty.
     3. The list of regexes `[listOfRegexes]` supports two forms of regex operations. The operations with in the list are executed sequentially.
         - Replacement: `s/regex/replacement/g`. `g` is optional for multiple replacements.
