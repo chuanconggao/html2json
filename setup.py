@@ -3,7 +3,7 @@
 from setuptools import setup
 
 url = "https://github.com/chuanconggao/html2json"
-version = "0.2.4"
+version = "0.2.4.1"
 
 setup(
     name="html2json",
