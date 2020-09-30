@@ -4,7 +4,7 @@
 
 Convert a HTML webpage to JSON data using a template defined in JSON.
 
-Installation
+Installation Guide
 ----
 
 This package is available on PyPi. Just use `pip install -U html2json` to install it. Then you can import it using `from html2json import collect`.
