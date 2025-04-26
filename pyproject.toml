@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "html2json"
+version = "0.3.0"
+description="Parsing HTML to JSON"
+authors = [{ name = "Chuancong Gao", email = "chuanconggao@users.noreply.github.com" }]
+requires-python = ">=3.9"
+readme = "README.md"
+license = "MIT"
+dependencies = [
+    "pyquery>=2.0.1",
+]
+keywords=[
+    "parser",
+    "html",
+    "json"
+]
+classifiers=[
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 3"
+]
+
+[project.urls]
+Repository = "https://github.com/chuanconggao/html2json"
+
+[dependency-groups]
+dev = [
+    "pytest-cov>=4.1.0",
+    "mypy>=1.7.1",
+]
+
+[tool.coverage.run]
+source = [
+    "src",
+]
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "--cov --cov-report xml:cov.xml --cov-report html --cov-report term-missing test"
+pythonpath = [
+    "src",
+]

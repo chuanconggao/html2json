@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+
+. .venv/bin/activate
+
+mypy --install-types src
+
+pytest

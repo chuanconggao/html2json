@@ -1,0 +1,25 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+  - id: check-case-conflict
+  - id: check-json
+  - id: check-merge-conflict
+  - id: check-symlinks
+  - id: check-toml
+  - id: check-yaml
+  - id: debug-statements
+  - id: end-of-file-fixer
+  - id: trailing-whitespace
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.11.0
+  hooks:
+    - id: ruff
+- repo: local
+  hooks:
+  - id: check-local
+    name: local checks on all files
+    language: script
+    entry: ./.pre-commit-local-checks
+    pass_filenames: false
+    always_run: true
