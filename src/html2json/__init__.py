@@ -80,6 +80,7 @@ def collect(html: str, template: Template) -> Data:
             elif isinstance(s, list):
                 if len(s) == 1 and isinstance(s[0], list):
                     sub_selector, sub_template = s[0]
+                    sub_selector = sub_selector.format(key=t) if sub_selector else None
 
                     data[t] = []
                     # Must use `.items()` which returns `PyQuery` objects
@@ -88,11 +89,15 @@ def collect(html: str, template: Template) -> Data:
                         collect_rec(sub_root, sub_template, data[t][-1])
                 elif len(s) == 2 and isinstance(s[1], dict):
                     sub_selector, sub_template = s[0], s[1]
+                    sub_selector = sub_selector.format(key=t) if sub_selector else None
 
                     data[t] = {}
                     collect_rec(root.find(sub_selector), sub_template, data[t])
                 else:
-                    data[t] = __extract(root, *s)
+                    data[t] = (
+                        __extract(root, s[0].format(key=t) if s[0] else None, *s[1:]) if s
+                        else __extract(root)
+                    )
 
     data: Data = {}
     collect_rec(PyQuery(html), template, data)

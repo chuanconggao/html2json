@@ -16,15 +16,15 @@ html1 = """
 html2 = """
 <html>
     <body>
-        <div class="item">
+        <div id="alpha" class="item">
             alpha
             <img src="alpha.png"/>
         </div>
-        <div class="item">
+        <div id="beta" class="item">
             beta
             <img src="beta.png"/>
         </div>
-        <div class="item">
+        <div id="gamma" class="item">
             gamma
             <img src="gamma.png"/>
         </div>
@@ -191,4 +191,26 @@ def test_key_matching() -> None:
                 },
             },
         ],
+    }
+
+
+def test_key_replace() -> None:
+    assert collect(html2, {
+        "items": {
+            json.dumps([".item"]): ["#{key}", {
+                "img.src": ["img", "src"],
+            }],
+        },
+    }) == {
+        "items": {
+            "alpha": {
+                "img.src": "alpha.png",
+            },
+            "beta": {
+                "img.src": "beta.png",
+            },
+            "gamma": {
+                "img.src": "gamma.png",
+            },
+        },
     }

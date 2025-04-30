@@ -49,6 +49,8 @@ Starting version 0.3.1, besides value, key can also matched like `"[selector, ..
 - When the selector matches single element, returned string is used as key.
 - When the selector matches multiple elements, list of returned strings are used as multiple keys.
 
+Starting version 0.3.1, you can also replace certain part of value's selector with current key using syntax `...{key}...`. This is especially useful when key is dynamic.
+
 <br/>
 
 As JSON, nested structure can be easily constructed.
