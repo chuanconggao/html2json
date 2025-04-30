@@ -1,3 +1,5 @@
+import json
+
 from html2json import collect
 
 html1 = """
@@ -149,6 +151,44 @@ def test_multiple() -> None:
             {
                 "text": "gamma",
                 "img.src": "gamma.png",
+            },
+        ],
+    }
+
+
+def test_key_matching() -> None:
+    assert collect(html1, {
+        json.dumps(["p"]): [],
+    }) == {}
+
+    assert collect(html1, {
+        json.dumps(["span"]): [],
+    }) == {
+        "Bob": "Hello!\nI am Bob.",
+    }
+
+    assert collect(html2, {
+        "items": [[".item", {
+            json.dumps([]): {
+                "img.src": ["img", "src"],
+            },
+        }]],
+    }) == {
+        "items": [
+            {
+                "alpha": {
+                    "img.src": "alpha.png",
+                },
+            },
+            {
+                "beta": {
+                    "img.src": "beta.png",
+                },
+            },
+            {
+                "gamma": {
+                    "img.src": "gamma.png",
+                },
             },
         ],
     }

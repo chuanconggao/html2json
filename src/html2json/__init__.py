@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 from re import Match, Pattern
 from typing import Any, cast
@@ -54,9 +55,25 @@ def __extract(
     return results if len(results) > 1 else results[0]
 
 
+def __collect_keys(root: PyQuery, key_template: str) -> list[str]:
+    if key_template[0] == '[' and key_template[-1] == "]":
+        keys: str | list[str] = __extract(root, *json.loads(key_template)) or []
+        return keys if isinstance(keys, list) else [keys]
+
+    return [key_template]
+
+
+def __expand_template(root: PyQuery, template: Template) -> Template:
+    return {
+        key: value
+        for key_template, value in template.items()
+        for key in __collect_keys(root, key_template)
+    }
+
+
 def collect(html: str, template: Template) -> Data:
     def collect_rec(root: PyQuery, template: Template, data: Data) -> None:
-        for (t, s) in template.items():
+        for (t, s) in __expand_template(root, template).items():
             if isinstance(s, dict):
                 data[t] = {}
                 collect_rec(root, s, data[t])
