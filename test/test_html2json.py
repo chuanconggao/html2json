@@ -32,6 +32,26 @@ html2 = """
 </html>
 """
 
+html3 = """
+<html>
+    <body>
+        The quick brown fox
+        jumps over
+        the lazy dog.
+    </body>
+</html>
+"""
+
+html4 = """
+<html>
+    <body>
+        The <b>quick brown fox</b>
+        jumps over
+        the <b>lazy dog</b>.
+    </body>
+</html>
+"""
+
 
 def test_basic() -> None:
     assert collect(html1, {
@@ -213,4 +233,46 @@ def test_key_replace() -> None:
                 "img.src": "gamma.png",
             },
         },
+    }
+
+
+def test_text_nodes() -> None:
+    assert collect(html1, {
+        "text": ["body ::text"],
+    }) == {
+        "text": ["\n", "\nI am ", ".\n", "\n"],
+    }
+
+    assert collect(html1, {
+        "text": ["body h1 ::text"],
+    }) == {
+        "text": "Hello!",
+    }
+
+    assert collect(html2, {
+        "text": ["body .item ::text"],
+    }) == {
+        "text": ["\nalpha\n", "\n", "\nbeta\n", "\n", "\ngamma\n", "\n"],
+    }
+
+    assert collect(html2, {
+        "text": ["body .item#alpha ::text"],
+    }) == {
+        "text": ["\nalpha\n", "\n"],
+    }
+
+    assert collect(html3, {
+        "text": ["body ::text"],
+    }) == {
+        "text": "\nThe quick brown fox\njumps over\nthe lazy dog.\n",
+    }
+
+    assert collect(html4, {
+        "text": ["body ::text"],
+    }) == {
+        "text": [
+            "\nThe ",
+            "\njumps over\nthe ",
+            ".\n",
+        ],
     }
