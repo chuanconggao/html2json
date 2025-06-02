@@ -67,12 +67,9 @@ def test_basic() -> None:
     }
 
     assert collect(html1, {
+        # Invalid selector syntax
         "title": ["body / h1"],
-    }) == {
-        "title": None,
-    }
-
-    assert collect(html1, {
+    }) == collect(html1, {
         "title": ["body h2"],
     }) == {
         "title": None,
@@ -86,21 +83,11 @@ def test_basic() -> None:
 
     assert collect(html1, {
         "text": [None, None, ["s/\\s+/ /g"]],
-    }) == {
-        "text": "Hello! I am Bob.",
-    }
-    assert collect(html1, {
+    }) == collect(html1, {
         "text": [None, None, ["s|\\s+| |g"]],
-    }) == {
-        "text": "Hello! I am Bob.",
-    }
-
-    assert collect(html1, {
+    }) == collect(html1, {
         "text": ["body", None, ["s/\\s+/ /g"]],
-    }) == {
-        "text": "Hello! I am Bob.",
-    }
-    assert collect(html1, {
+    }) == collect(html1, {
         "text": ["body", None, ["s|\\s+| |g"]],
     }) == {
         "text": "Hello! I am Bob.",
@@ -108,10 +95,7 @@ def test_basic() -> None:
 
     assert collect(html1, {
         "img.src": ["body img", "src", ["/\\w+\\.png$/"]],
-    }) == {
-        "img.src": "img.png",
-    }
-    assert collect(html1, {
+    }) == collect(html1, {
         "img.src": ["body img", "src", ["|\\w+\\.png$|"]],
     }) == {
         "img.src": "img.png",
@@ -135,13 +119,7 @@ def test_nested() -> None:
         "body": {
             "title": ["body h1"],
         },
-    }) == {
-        "body": {
-            "title": "Hello!",
-        },
-    }
-
-    assert collect(html1, {
+    }) == collect(html1, {
         "body": ["body", {
             "title": ["h1"],
         }],
