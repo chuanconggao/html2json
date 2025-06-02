@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "html2json"
-version = "0.3.2"
+version = "0.3.3"
 description="Parsing HTML to JSON"
 authors = [{ name = "Chuancong Gao", email = "chuanconggao@users.noreply.github.com" }]
 requires-python = ">=3.9"
