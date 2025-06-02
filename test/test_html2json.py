@@ -136,6 +136,20 @@ def test_nested() -> None:
 
 def test_multiple() -> None:
     assert collect(html2, {
+        "items": [".item"],
+    }) == collect(html2, {
+        "items": [[".item"]],
+    }) == collect(html2, {
+        "items": [[".item", None]],
+    }) == {
+        "items": [
+            "alpha",
+            "beta",
+            "gamma",
+        ],
+    }
+
+    assert collect(html2, {
         "items": [[".item", {
             "text": [],
             "img.src": ["img", "src"],

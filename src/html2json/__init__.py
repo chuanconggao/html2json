@@ -147,14 +147,17 @@ def collect(html: str, template: Template) -> Data:
                 collect_rec(root, s, data[t])
             elif isinstance(s, list):
                 if len(s) == 1 and isinstance(s[0], list):
-                    sub_selector, sub_template = s[0]
+                    sub_selector, sub_template = s[0] if len(s[0]) > 1 else (s[0][0], None)
                     sub_selector = sub_selector.format(key=t) if sub_selector else None
 
                     data[t] = []
                     # Must use `.items()` which returns `PyQuery` objects
                     for sub_root in root.find(sub_selector).items():
-                        data[t].append({})
-                        collect_rec(sub_root, sub_template, data[t][-1])
+                        if sub_template:
+                            data[t].append({})
+                            collect_rec(sub_root, sub_template, data[t][-1])
+                        else:
+                            data[t].append(__extract(sub_root))
                 elif len(s) == 2 and isinstance(s[1], dict):
                     sub_selector, sub_template = s[0], s[1]
                     sub_selector = sub_selector.format(key=t) if sub_selector else None

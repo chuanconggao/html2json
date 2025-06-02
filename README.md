@@ -89,6 +89,7 @@ For example, the previous example can be simplified as follow.
 To extract a list of sub-entries following the same sub-template, the list syntax is `keyName: [[subRoot, subTemplate]]`. Please note the difference (surrounding `[` and `]`) from the previous syntax above.
     1. `subRoot` is the CSS selector of the new root for each sub entry.
     2. `subTemplate` is the sub-template for each entry, recursively.
+        - Optional or `null` to match entire sub-root
 
 For example:
 
