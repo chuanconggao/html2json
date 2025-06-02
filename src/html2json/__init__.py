@@ -166,6 +166,10 @@ def collect(html: str, template: Template) -> Data:
                         __extract(root, s[0].format(key=t) if s[0] else None, *s[1:]) if s
                         else __extract(root)
                     )
+            elif isinstance(s, str):
+                data[t] = __extract(root, s.format(key=t))
+            elif s is None:
+                data[t] = __extract(root)
 
     data: Data = {}
     collect_rec(PyQuery(html), template, data)

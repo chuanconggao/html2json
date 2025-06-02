@@ -29,11 +29,14 @@ The basic syntax is `keyName: [selector, attr, [listOfRegexes]]`.
         - When the selector cannot be matched, `null` is returned.
         - When the selector matches single element, a string is returned.
         - When the selector matches multiple elements, a list of string is returned.
+        - If only selector is needed, you can just specify a string instead of list.
     2. `attr` matches the attribute value. It can be `null` to match either the inner text or the outer text when the inner text is empty.
+        - Optional when only selector is needed.
     3. The list of regexes `[listOfRegexes]` supports two forms of regex operations. The operations with in the list are executed sequentially.
         - Replacement: `s/regex/replacement/g`. `g` is optional for multiple replacements.
         - Extraction: `/regex/`.
         - Note that you can use any character as separator instead of `/`.
+        - Optional when only selector and/or attribute are needed.
 
 For example:
 

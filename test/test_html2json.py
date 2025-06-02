@@ -56,12 +56,16 @@ html4 = """
 def test_basic() -> None:
     assert collect(html1, {
         "text": [],
+    }) == collect(html1, {
+        "text": None,
     }) == {
         "text": "Hello!\nI am Bob.",
     }
 
     assert collect(html1, {
         "title": ["body h1"],
+    }) == collect(html1, {
+        "title": "body h1",
     }) == {
         "title": "Hello!",
     }
