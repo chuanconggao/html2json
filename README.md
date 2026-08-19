@@ -1,3 +1,5 @@
+
+
 [![PyPi version](https://img.shields.io/pypi/v/html2json.svg)](https://pypi.python.org/pypi/html2json/)
 [![PyPi pyversions](https://img.shields.io/pypi/pyversions/html2json.svg)](https://pypi.python.org/pypi/html2json/)
 [![PyPi license](https://img.shields.io/pypi/l/html2json.svg)](https://pypi.python.org/pypi/html2json/)
@@ -30,6 +32,7 @@ The basic syntax is `keyName: [selector, attr, [listOfRegexes]]`.
         - When the selector matches single element, a string is returned.
         - When the selector matches multiple elements, a list of string is returned.
         - If only selector is needed, you can just specify a string instead of list.
+        - Selectors can end with ` ::text` (with a preceding space) to match text nodes.
     2. `attr` matches the attribute value. It can be `null` to match either the inner text or the outer text when the inner text is empty.
         - Optional when only selector is needed.
     3. The list of regexes `[listOfRegexes]` supports two forms of regex operations. The operations with in the list are executed sequentially.
